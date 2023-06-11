@@ -1,0 +1,13 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Update Book{% else %}Add Book{% endif %}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">{% if form.instance.pk %}Update{% else %}Add{% endif %}</button>
+    </form>
+{% endblock %}

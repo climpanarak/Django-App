@@ -1,0 +1,37 @@
+{% extends "catalog/base.html" %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    {% if perms.catalog.create_author or perms.catalog.edit_author %}
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            {% if user.is_superuser %}
+                <!-- Fields for adding a new author -->
+                <h3>Add New Author</h3>
+                <div class="mb-3">
+                    <label for="id_author_first_name" class="form-label">First Name</label>
+                    <input type="text" name="author_first_name" id="id_author_first_name" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="id_author_last_name" class="form-label">Last Name</label>
+                    <input type="text" name="author_last_name" id="id_author_last_name" class="form-control">
+                </div>
+
+                <!-- Fields for adding a new genre -->
+                <h3>Add New Genre</h3>
+                <div class="mb-3">
+                    <label for="id_genre_name" class="form-label">Genre Name</label>
+                    <input type="text" name="genre_name" id="id_genre_name" class="form-control">
+                </div>
+            {% endif %}
+
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+        </form>
+    {% else %}
+        You do not have permission to access this feature
+        <a href="{% url 'index' %}">Home</a>
+    {% endif %}
+{% endblock %}
